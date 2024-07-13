@@ -1,6 +1,6 @@
 from enum import Enum
 
-from database.enums import utils
+from database import utils
 
 def get_battle_spec_enum(base_url: str) -> Enum:
     response_text = utils.get_response_text(f'{base_url}/src/enums/battle-spec.ts')
@@ -9,7 +9,7 @@ def get_battle_spec_enum(base_url: str) -> Enum:
     battle_spec = map(utils.strip_and_remove_commas, battle_spec)
     battle_spec = list(battle_spec)
 
-    BattleSpec = Enum('BattleSpec', battle_spec)
+    BattleSpec = Enum('BattleSpec', battle_spec, start=0)
 
     return BattleSpec
 

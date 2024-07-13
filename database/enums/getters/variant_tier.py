@@ -1,6 +1,6 @@
 from enum import Enum
 
-from database.enums import utils
+from database import utils
 
 def get_variant_tier_enum(base_url: str) -> Enum:
     response_text = utils.get_response_text(f'{base_url}/src/enums/variant-tier.ts')
@@ -9,7 +9,7 @@ def get_variant_tier_enum(base_url: str) -> Enum:
     species = map(utils.strip_and_remove_commas, species)
     species = list(species)
 
-    Species = Enum('Species', species)
+    Species = Enum('Species', species, start=0)
 
     return Species
 

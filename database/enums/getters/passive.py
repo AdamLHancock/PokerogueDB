@@ -1,6 +1,6 @@
 from enum import Enum
 
-from database.enums import utils
+from database import utils
 
 def clean_comments(passives: list) -> list:
     cleaned_passives = []
@@ -27,20 +27,22 @@ def process_list(passives: list) -> dict:
             prev = passive_dict[entry.strip()]
     return passive_dict
 
-def get_player_gender_enum(base_url: str) -> Enum:
-    response_text = utils.get_response_text(f'{base_url}/src/enums/player-gender.ts')
+def get_passive_enum(base_url: str) -> Enum:
+    response_text = utils.get_response_text(f'{base_url}/src/enums/passive.ts')
 
-    player_gender = filter(lambda x: "{" not in x and "}" not in x and x != "", response_text.split('\n'))
-    player_gender = map(utils.strip_and_remove_commas, player_gender)
-    player_gender = list(player_gender)
-    player_gender = clean_comments(player_gender)
+    passive = filter(lambda x: "{" not in x and "}" not in x and x != "", response_text.split('\n'))
+    passive = map(utils.strip_and_remove_commas, passive)
+    passive = list(passive)
+    passive = clean_comments(passive)
+    passive = process_list(passive)
 
-    PlayerGender = Enum('PlayerGender', player_gender)
+    Passive = Enum('Passive', passive)
 
-    return PlayerGender
+    return Passive
 
 if __name__ == "__main__":
     repo = 'pagefaultgames/pokerogue/main'
     base = f'https://raw.githubusercontent.com/{repo}'
-    player_gender = get_player_gender_enum(base)
-    print([e.name for e in player_gender])
+    passive = get_passive_enum(base)
+    print([e.name for e in passive])
+    print([e.value for e in passive])

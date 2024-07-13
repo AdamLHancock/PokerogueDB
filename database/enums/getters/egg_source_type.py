@@ -1,15 +1,14 @@
 from enum import Enum
 
-from database.enums import utils
+from database import utils
 
 def get_egg_source_type_enum(base_url: str) -> Enum:
-    response_text = utils.get_response_text(f'{base_url}/src/enums/egg-ource-type.ts')
-
+    response_text = utils.get_response_text(f'{base_url}/src/enums/egg-source-types.ts')
     egg_source_type = filter(lambda x: "{" not in x and "}" not in x and x != "", response_text.split('\n'))
     egg_source_type = map(utils.strip_and_remove_commas, egg_source_type)
     egg_source_type = list(egg_source_type)
 
-    EggSourceType = Enum('EggSourceType', egg_source_type)
+    EggSourceType = Enum('EggSourceType', egg_source_type, start=0)
 
     return EggSourceType
 

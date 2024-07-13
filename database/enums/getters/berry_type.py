@@ -1,6 +1,6 @@
 from enum import Enum
 
-from database.enums import utils
+from database import utils
 
 def get_berry_type_enum(base_url: str) -> Enum:
     response_text = utils.get_response_text(f'{base_url}/src/enums/berry-type.ts')
@@ -9,7 +9,7 @@ def get_berry_type_enum(base_url: str) -> Enum:
     berry_type = map(utils.strip_and_remove_commas, berry_type)
     berry_type = list(berry_type)
 
-    BerryType = Enum('BerryType', berry_type)
+    BerryType = Enum('BerryType', berry_type, start=0)
 
     return BerryType
 

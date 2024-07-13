@@ -1,6 +1,6 @@
 from enum import Enum
 
-from database.enums import utils
+from database import utils
 
 def get_party_member_strength_enum(base_url: str) -> Enum:
     response_text = utils.get_response_text(f'{base_url}/src/enums/party-member-strength.ts')
@@ -9,7 +9,7 @@ def get_party_member_strength_enum(base_url: str) -> Enum:
     party_member_strength = map(utils.strip_and_remove_commas, party_member_strength)
     party_member_strength = list(party_member_strength)
 
-    PartyMemberStrength = Enum('PartyMemberStrength', party_member_strength)
+    PartyMemberStrength = Enum('PartyMemberStrength', party_member_strength, start=0)
 
     return PartyMemberStrength
 

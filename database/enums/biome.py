@@ -1,31 +1,38 @@
 from enum import Enum
 
-from database.enums import utils
-
-def get_biome_enum(base_url: str) -> Enum:
-    response_text = utils.get_response_text(f'{base_url}/src/enums/biome.ts')
-    
-    biome = filter(lambda x: "{" not in x and "}" not in x and x != "", response_text.split('\n'))
-    biome = map(utils.strip_and_remove_commas, biome)
-    biome = list(biome)
-    enum_dict = {}
-    prev = 0
-    for entry in biome:
-        if '=' in entry:
-            key, value = entry.split('=')
-            enum_dict[key.strip()] = int(value.strip())
-            prev = int(value.strip())
-        else:
-            enum_dict[entry.strip()] = prev + 1
-            prev = enum_dict[entry.strip()]
-
-    Biome = Enum('Biome', enum_dict)
-
-    return Biome
-
-if __name__ == "__main__":
-    repo = 'pagefaultgames/pokerogue/main'
-    base = f'https://raw.githubusercontent.com/{repo}'
-    biome = get_biome_enum(base)
-    print([e.name for e in biome])
-    print([e.value for e in biome])
+class Biome(Enum):
+	TOWN = 1
+	PLAINS = 2
+	GRASS = 3
+	TALL_GRASS = 4
+	METROPOLIS = 5
+	FOREST = 6
+	SEA = 7
+	SWAMP = 8
+	BEACH = 9
+	LAKE = 10
+	SEABED = 11
+	MOUNTAIN = 12
+	BADLANDS = 13
+	CAVE = 14
+	DESERT = 15
+	ICE_CAVE = 16
+	MEADOW = 17
+	POWER_PLANT = 18
+	VOLCANO = 19
+	GRAVEYARD = 20
+	DOJO = 21
+	FACTORY = 22
+	RUINS = 23
+	WASTELAND = 24
+	ABYSS = 25
+	SPACE = 26
+	CONSTRUCTION_SITE = 27
+	JUNGLE = 28
+	FAIRY_CAVE = 29
+	TEMPLE = 30
+	SLUM = 31
+	SNOWY_FOREST = 32
+	ISLAND = 40
+	LABORATORY = 41
+	END = 50

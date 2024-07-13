@@ -1,6 +1,6 @@
 from enum import Enum
 
-from database.enums import utils
+from database import utils
 
 def get_ability_enum(base_url: str) -> Enum:
     """
@@ -25,7 +25,7 @@ def get_ability_enum(base_url: str) -> Enum:
 
     # Create an Enum object with the extracted names
     enum_list = [i.replace(",", "") for i in abilities_list]
-    Ability = Enum('Ability', enum_list)
+    Ability = Enum('Ability', enum_list, start=0)
 
     # Return the Enum object representing the abilities
     return Ability
@@ -34,5 +34,6 @@ if __name__ == "__main__":
     repo = 'pagefaultgames/pokerogue/main'
     base = f'https://raw.githubusercontent.com/{repo}'
     ability = get_ability_enum(base)
-    print([e.name for e in ability])
-    print([e.value for e in ability])
+    utils.write_enum("Ability", ability)
+    # print([e.name for e in ability])
+    # print([e.value for e in ability])

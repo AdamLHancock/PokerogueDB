@@ -1,6 +1,6 @@
 from enum import Enum
 
-from database.enums import utils
+from database import utils
 
 def get_arena_tag_type_enum(base_url: str) -> Enum:
     response_text = utils.get_response_text(f'{base_url}/src/enums/arena-tag-type.ts')

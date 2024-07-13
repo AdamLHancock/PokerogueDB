@@ -1,6 +1,6 @@
 from enum import Enum
 
-from database.enums import utils
+from database import utils
 
 def get_egg_type_enum(base_url: str) -> Enum:
     response_text = utils.get_response_text(f'{base_url}/src/enums/egg-type.ts')
@@ -9,7 +9,7 @@ def get_egg_type_enum(base_url: str) -> Enum:
     egg_type = map(utils.strip_and_remove_commas, egg_type)
     egg_type = list(egg_type)
 
-    EggType = Enum('EggType', egg_type)
+    EggType = Enum('EggType', egg_type, start=0)
 
     return EggType
 

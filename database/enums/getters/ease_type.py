@@ -1,6 +1,6 @@
 from enum import Enum
 
-from database.enums import utils
+from database import utils
 
 def get_ease_type_enum(base_url: str) -> Enum:
     response_text = utils.get_response_text(f'{base_url}/src/enums/ease-type.ts')
@@ -11,8 +11,11 @@ def get_ease_type_enum(base_url: str) -> Enum:
     ease_type_dict = {}
 
     for entry in ease_type:
-        key, value = entry.split('=')
-        ease_type_dict[key.strip()] = value.strip()
+        if entry == "NONE":
+            ease_type_dict[entry] = "NONE"
+        else:
+            key, value = entry.split('=')
+            ease_type_dict[key.strip()] = value.strip()
 
     EaseType = Enum('EaseType', ease_type_dict)
 

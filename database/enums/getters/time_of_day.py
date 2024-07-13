@@ -1,6 +1,6 @@
 from enum import Enum
 
-from database.enums import utils
+from database import utils
 
 def process_list(species: list) -> dict:
     prev = 0
